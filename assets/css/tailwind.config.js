@@ -1,9 +1,6 @@
 module.exports = {
   purge: {
-    content: ['./layouts/**/*.html'],
-    options: {
-      whitelist: [],
-    }
+    content: ['./hugo_stats.json'],
 },
   theme: {
     extend: {},

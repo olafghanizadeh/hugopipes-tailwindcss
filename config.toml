@@ -1,2 +1,4 @@
 title = "HugoPipes-tailwindcss"
 
+[build]
+  writeStats = true

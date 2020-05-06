@@ -2,19 +2,12 @@
   <head>
     
     
-{{ if .Site.IsServer }}
-
-  {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/dev/postcss.config.js") | fingerprint }}
-    
-  <link rel="stylesheet" href="{{ $style.Permalink }}" data> 
-
-{{ else }}
-
-  {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/postcss.config.js")  | minify | fingerprint }}
-  
-  <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}"> 
-
+{{ $css := resources.Get "css/styles.css" }}
+{{ $css = $css | resources.PostCSS (dict "config" "./assets/css/dev/postcss.config.js") | fingerprint }}
+{{ if hugo.IsProduction }}
+{{ $css = $css | minify | fingerprint | resources.PostCSS (dict "config" "assets/css/postcss.config.js") | resources.PostProcess }}
 {{ end }}
+<link href="{{ $css.RelPermalink }}" rel="stylesheet" />
 
     
   </head>
